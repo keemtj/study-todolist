@@ -10,29 +10,29 @@
   <body>
     <div class="container">
       <header class="header">
-        <h1>TODOLIST</h1>
-        <div>2.0</div>
+        <h1>Todos</h1>
+        <div>v2.0</div>
       </header>
-      <main>
-        <div>
-          <label>
-            <input type="text" placeholder="Enter Todo!" />
-          </label>
-        </div>
-        <div>
-          <span>5</span>
-          <span>items left</span>
-          <button>Clear checked</button>
-        </div>
-        <div>
-          <input type="checkbox" />
-          <label>Check All</label>
-        </div>
-        <ul>
-          <li>
+      <main class="main">
+        <section class="section-input">
+          <input class="input-todo" type="text" placeholder="Enter Todo!" />
+        </section>
+        <section class="section-feature">
+          <div>
+            <input type="checkbox" />
+            <label>Check All</label>
+          </div>
+          <div>
+            <span>5</span>
+            <span>items left</span>
+            <button class="btn-remove-checked">Clear checked</button>
+          </div>
+        </section>
+        <ul class="todos">
+          <li class="todo">
             <input type="checkbox" />
             <span>todo</span>
-            <i class="fas fa-times"></i>
+            <i class="far fa-trash-alt"></i>
           </li>
         </ul>
       </main>
