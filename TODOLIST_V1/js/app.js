@@ -19,6 +19,7 @@ const render = () => {
   });
 
   todosEl.innerHTML = html;
+  console.log(todos);
 };
 
 // get data(=fetch temp datas)
@@ -34,17 +35,41 @@ const getTodos = () => {
   render();
 };
 
+const nextId = () =>
+  todos.length ? Math.max(...todos.map((todo) => todo.id)) + 1 : 1;
+
+const inputTodo = (content) => {
+  todos = [{ id: nextId(), content, done: false }, ...todos];
+  inputTodoEl.value = "";
+  render();
+};
+
+const checkTodo = (id) => {
+  todos = todos.map((todo) =>
+    todo.id === id ? { ...todo, done: !todo.done } : todo
+  );
+  render();
+};
+
+const removeTodo = (id) => {
+  todos = todos.filter((todo) => todo.id !== id);
+  render();
+};
+
 // Event Binding
 // ! 1. window onload
 window.onload = getTodos;
 
 inputTodoEl.onkeypress = ({ target, keyCode }) => {
-  if (keyCode !== 13 || target.value.trim() === "") return;
   const content = target.value;
-  const inputTodo = (content) => {
-    todos = [{ id: 4, content, done: false }, ...todos];
-    inputTodoEl.value = "";
-    render();
-  };
+  if (keyCode !== 13 || content.trim() === "") return;
   inputTodo(content);
+};
+
+todosEl.onchange = ({ target }) => {
+  checkTodo(+target.parentNode.id);
+};
+
+todosEl.onclick = ({ target }) => {
+  removeTodo(+target.parentNode.id);
 };
