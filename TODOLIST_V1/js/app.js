@@ -39,7 +39,7 @@ const getTodos = () => {
 window.onload = getTodos;
 
 inputTodoEl.onkeypress = ({ target, keyCode }) => {
-  if (keyCode !== 13) return;
+  if (keyCode !== 13 || target.value.trim() === "") return;
   const content = target.value;
   const inputTodo = (content) => {
     todos = [{ id: 4, content, done: false }, ...todos];
