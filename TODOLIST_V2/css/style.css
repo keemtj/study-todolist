@@ -78,7 +78,7 @@
   border: none;
 }
 
-.todo span {
+.todo label {
   display: inline-block;
   width: calc(100% - 2.7rem);
 }

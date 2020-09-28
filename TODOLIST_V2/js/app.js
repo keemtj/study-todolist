@@ -15,9 +15,9 @@ const clearCheckedEl = document.querySelector(".btn-remove-checked");
 const render = () => {
   let list = "";
 
-  if (!todos.length) {
-    list += "<div>todos 없을때 스타일 해결해라</div>";
-  }
+  // if (!todos.length) {
+  //   list += "<div>todos 없을때 스타일 해결해라</div>";
+  // }
 
   todos.forEach(
     ({ id, done, content }) =>
