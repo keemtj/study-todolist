@@ -10,6 +10,8 @@ const todosEl = document.querySelector(".todos");
 const inputEl = document.querySelector(".input-todo");
 const checkAllEl = document.querySelector(".check-all");
 const clearCheckedEl = document.querySelector(".btn-remove-checked");
+const leftItemsEl = document.querySelector(".left-items");
+const checkedItemsEl = document.querySelector(".checked-items");
 
 // Render
 const render = () => {
@@ -29,6 +31,9 @@ const render = () => {
   );
 
   todosEl.innerHTML = list;
+  leftItemsEl.textContent = todos.filter((todo) => !todo.done).length;
+  checkedItemsEl.textContent = todos.filter((todo) => todo.done).length;
+
   console.log(todos);
 };
 
