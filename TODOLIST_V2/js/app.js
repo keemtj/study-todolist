@@ -8,6 +8,8 @@ let todos = [
 // DOMs
 const todosEl = document.querySelector(".todos");
 const inputEl = document.querySelector(".input-todo");
+const checkAllEl = document.querySelector(".check-all");
+const clearCheckedEl = document.querySelector(".btn-remove-checked");
 
 // Render
 const render = () => {
@@ -20,8 +22,8 @@ const render = () => {
   todos.forEach(
     ({ id, done, content }) =>
       (list += `<li class="todo" id=${id}>
-  <input type="checkbox" ${done && "checked"}/>
-  <span>${content}</span>
+  <input id="todo-${id}" type="checkbox" ${done && "checked"}/>
+  <label for="todo-${id}">${content}</label>
   <i class="far fa-trash-alt"></i>
 </li>`)
   );
@@ -41,8 +43,11 @@ const getData = () => {
   render();
 };
 
+const nextId = () =>
+  todos.length ? Math.max(...todos.map((todo) => todo.id)) + 1 : 1;
+
 const addTodo = (content) => {
-  todos = [{ id: 4, content, done: false }, ...todos];
+  todos = [{ id: nextId(), content, done: false }, ...todos];
   render();
   inputEl.value = "";
 };
@@ -59,6 +64,15 @@ const checkTodo = (id) => {
   render();
 };
 
+const checkAll = (done) => {
+  todos = todos.map((todo) => ({ ...todo, done }));
+  render();
+};
+
+const clearChecked = () => {
+  todos = todos.filter((todo) => !todo.done);
+  render();
+};
 // Event Binding
 window.onload = getData;
 
@@ -75,4 +89,13 @@ todosEl.onclick = ({ target }) => {
 
 todosEl.onchange = ({ target }) => {
   checkTodo(+target.parentNode.id);
+};
+
+checkAllEl.onchange = ({ target }) => {
+  checkAll(target.checked);
+};
+
+clearCheckedEl.onclick = () => {
+  checkAllEl.checked = false;
+  clearChecked();
 };
