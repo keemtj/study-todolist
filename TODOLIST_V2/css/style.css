@@ -73,6 +73,21 @@
   overflow: scroll;
 }
 
+.todos > .none-todos {
+  background-color: #f0f3f4;
+  padding: 4rem 0rem;
+  color: gray;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.none-todos > :first-child {
+  padding-bottom: 0.5rem;
+}
+
 .todo {
   padding: 1rem;
   border-bottom: 1px solid lightgray;

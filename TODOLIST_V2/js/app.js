@@ -17,9 +17,13 @@ const checkedItemsEl = document.querySelector(".checked-items");
 const render = () => {
   let list = "";
 
-  // if (!todos.length) {
-  //   list += "<div>todos 없을때 스타일 해결해라</div>";
-  // }
+  if (!todos.length) {
+    todosEl.style.border = "none";
+    list += `<li class="none-todos">
+    <div>등록된 Todo가 없습니다.</div>
+    <div>새로운 Todo를 작성하세요.</div>
+    </li>`;
+  }
 
   todos.forEach(
     ({ id, done, content }) =>
