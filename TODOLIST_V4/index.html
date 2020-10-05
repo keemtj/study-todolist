@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODOLIST 4.0</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Todos</h1>
+        <div>v3.0</div>
+      </header>
+      <main class="main">
+        <section class="section-input">
+          <input class="input-todo" type="text" placeholder="Enter Todo!" />
+        </section>
+        <ul class="nav">
+          <li id="all" class="active">All</li>
+          <li id="active">Active</li>
+          <li id="done">Done</li>
+        </ul>
+        <section class="section-feature">
+          <div>
+            <input class="check-all" id="check-all" type="checkbox" />
+            <label for="check-all">Check All</label>
+          </div>
+          <div>
+            <span class="left-items">5</span>
+            <span>items left</span>
+            <button class="btn-remove-checked">
+              Clear checked (<span class="checked-items">0</span>)
+            </button>
+          </div>
+        </section>
+        <ul class="todos">
+          <!-- <li class="todo" id="${id}">
+            <input id="todo-${id}" type="checkbox" ${done && "checked"}/>
+            <label for="todo-${id}">${content}</label>
+            <i class="far fa-trash-alt"></i>
+          </li> -->
+        </ul>
+      </main>
+    </div>
+    <script src="js/app.js"></script>
+  </body>
+</html>
