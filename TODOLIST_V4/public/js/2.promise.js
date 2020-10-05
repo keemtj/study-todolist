@@ -13,8 +13,8 @@ const navEl = document.querySelector(".nav");
 
 // Render
 const render = () => {
-  const filteredTodos = todos.filter(({ done }) =>
-    nav === "all" ? true : nav === "active" ? !done : done
+  const filteredTodos = todos.filter(({ completed }) =>
+    nav === "all" ? true : nav === "active" ? !completed : completed
   );
   let list = "";
 
@@ -33,7 +33,7 @@ const render = () => {
     </li>`;
   }
 
-  if (!filteredTodos.length && nav === "done") {
+  if (!filteredTodos.length && nav === "completed") {
     todosEl.style.border = "none";
     list += `<li class="none-todos">
     <div>완료된 Todo가 없습니다.</div>
@@ -41,17 +41,17 @@ const render = () => {
   }
 
   filteredTodos.forEach(
-    ({ id, done, content }) =>
+    ({ id, completed, content }) =>
       (list += `<li class="todo" id=${id}>
-  <input id="todo-${id}" type="checkbox" ${done && "checked"}/>
+  <input id="todo-${id}" type="checkbox" ${completed && "checked"}/>
   <label for="todo-${id}">${content}</label>
   <i class="far fa-trash-alt"></i>
 </li>`)
   );
 
   todosEl.innerHTML = list;
-  leftItemsEl.textContent = todos.filter((todo) => !todo.done).length;
-  checkedItemsEl.textContent = todos.filter((todo) => todo.done).length;
+  leftItemsEl.textContent = todos.filter((todo) => !todo.completed).length;
+  checkedItemsEl.textContent = todos.filter((todo) => todo.completed).length;
 };
 
 // request
@@ -71,66 +71,55 @@ const promise = (method, url, payload) =>
     };
   });
 
-// Get data(temp)
-// const getData = () => {
-//   todos = [
-//     { id: 3, content: "Javascript으로 동적인 페이지 만들기", done: true },
-//     { id: 2, content: "CSS로 멋진 스타일링", done: false },
-//     { id: 1, content: "HTML의 중요성", done: false },
-//   ];
-
-//   render();
-// };
-
 const nextId = () =>
   todos.length ? Math.max(...todos.map((todo) => todo.id)) + 1 : 1;
 
 const getTodos = () => {
-  ajax.get("http://localhost:5000/todos", (data) => {
-    todos = data;
-    render();
-  });
+  promise("GET", "http://localhost:9000/todos")
+    .then((data) => (todos = data))
+    .then(() => console.log("[promise, getTodos]", todos))
+    .then(render);
 };
 
 const addTodo = (content) => {
-  ajax.post(
-    "http://localhost:5000/todos",
-    { id: nextId(), content, done: false },
-    (data) => {
-      todos = data;
-      render();
-    }
-  );
+  promise("POST", "http://localhost:9000/todos", {
+    id: nextId(),
+    content,
+    completed: false,
+  })
+    .then((data) => (todos = data))
+    .then(() => console.log("[promise, addTodo]", todos))
+    .then(render);
   inputEl.value = "";
 };
 
 const removeTodo = (id) => {
-  ajax.delete(`http://localhost:5000/todos/${id}`, (data) => {
-    todos = data;
-    render();
-  });
+  promise("DELETE", `http://localhost:9000/todos/${id}`)
+    .then((data) => (todos = data))
+    .then(() => console.log("[promise, removeTodo]", todos))
+    .then(render);
 };
 
 const checkTodo = (id) => {
-  const done = !todos.find((todo) => todo.id === id).done;
-  ajax.patch(`http://localhost:5000/todos/${id}`, { done }, (data) => {
-    todos = data;
-    render();
-  });
+  const completed = !todos.find((todo) => todo.id === id).completed;
+  promise("PATCH", `http://localhost:9000/todos/${id}`, { completed })
+    .then((data) => (todos = data))
+    .then(() => console.log("[promise, toggleCompleted]", todos))
+    .then(render);
 };
 
-const checkAll = (done) => {
-  ajax.patch("http://localhost:5000/todos", { done }, (data) => {
-    todos = data;
-    render();
-  });
+const checkAll = (completed) => {
+  promise("PATCH", "http://localhost:9000/todos", { completed })
+    .then((data) => (todos = data))
+    .then(() => console.log("[promise, toggleCompletedAll]", todos))
+    .then(render);
 };
 
 const clearChecked = () => {
-  ajax.delete("http://localhost:5000/todos/done", (data) => {
-    todos = data;
-    render();
-  });
+  promise("DELETE", "http://localhost:9000/todos/completed")
+    .then((data) => (todos = data))
+    .then(() => console.log("[promise, removeCompleted]", todos))
+    .then(render);
 };
 
 const navChange = (id) => {
