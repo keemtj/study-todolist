@@ -1,9 +1,5 @@
 // State
-let todos = [
-  // { id: 3, content: "Javascript으로 동적인 페이지 만들기", done: false },
-  // { id: 2, content: "CSS로 멋진 스타일링", done: false },
-  // { id: 1, content: "HTML의 중요성", done: false },
-];
+let todos = [];
 let nav = "all";
 
 // DOMs
@@ -56,50 +52,85 @@ const render = () => {
   todosEl.innerHTML = list;
   leftItemsEl.textContent = todos.filter((todo) => !todo.done).length;
   checkedItemsEl.textContent = todos.filter((todo) => todo.done).length;
-
-  console.log(todos);
 };
+
+// request
+const promise = (method, url, payload) =>
+  new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.send(JSON.stringify(payload));
+
+    xhr.onload = () => {
+      if (xhr.status === 200 || xhr.status === 201) {
+        resolve(JSON.parse(xhr.response));
+      } else {
+        reject(new Error(xhr.status));
+      }
+    };
+  });
 
 // Get data(temp)
-const getData = () => {
-  todos = [
-    { id: 3, content: "Javascript으로 동적인 페이지 만들기", done: true },
-    { id: 2, content: "CSS로 멋진 스타일링", done: false },
-    { id: 1, content: "HTML의 중요성", done: false },
-  ];
+// const getData = () => {
+//   todos = [
+//     { id: 3, content: "Javascript으로 동적인 페이지 만들기", done: true },
+//     { id: 2, content: "CSS로 멋진 스타일링", done: false },
+//     { id: 1, content: "HTML의 중요성", done: false },
+//   ];
 
-  render();
-};
+//   render();
+// };
 
 const nextId = () =>
   todos.length ? Math.max(...todos.map((todo) => todo.id)) + 1 : 1;
 
+const getTodos = () => {
+  ajax.get("http://localhost:5000/todos", (data) => {
+    todos = data;
+    render();
+  });
+};
+
 const addTodo = (content) => {
-  todos = [{ id: nextId(), content, done: false }, ...todos];
-  render();
+  ajax.post(
+    "http://localhost:5000/todos",
+    { id: nextId(), content, done: false },
+    (data) => {
+      todos = data;
+      render();
+    }
+  );
   inputEl.value = "";
 };
 
 const removeTodo = (id) => {
-  todos = todos.filter((todo) => todo.id !== id);
-  render();
+  ajax.delete(`http://localhost:5000/todos/${id}`, (data) => {
+    todos = data;
+    render();
+  });
 };
 
 const checkTodo = (id) => {
-  todos = todos.map((todo) =>
-    todo.id === id ? { ...todo, done: !todo.done } : todo
-  );
-  render();
+  const done = !todos.find((todo) => todo.id === id).done;
+  ajax.patch(`http://localhost:5000/todos/${id}`, { done }, (data) => {
+    todos = data;
+    render();
+  });
 };
 
 const checkAll = (done) => {
-  todos = todos.map((todo) => ({ ...todo, done }));
-  render();
+  ajax.patch("http://localhost:5000/todos", { done }, (data) => {
+    todos = data;
+    render();
+  });
 };
 
 const clearChecked = () => {
-  todos = todos.filter((todo) => !todo.done);
-  render();
+  ajax.delete("http://localhost:5000/todos/done", (data) => {
+    todos = data;
+    render();
+  });
 };
 
 const navChange = (id) => {
@@ -111,7 +142,7 @@ const navChange = (id) => {
 };
 
 // Event Binding
-window.onload = getData;
+window.onload = getTodos;
 
 inputEl.onkeypress = ({ target, keyCode }) => {
   let content = target.value;

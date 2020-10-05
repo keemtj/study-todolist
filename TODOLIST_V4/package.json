@@ -1,15 +1,20 @@
 {
   "name": "TODOLIST_V4",
   "version": "1.0.0",
-  "description": "xhr",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "json-server --watch data.json"
+    "start": "nodemon server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "json-server": "^0.16.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
   }
 }

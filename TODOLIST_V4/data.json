@@ -1,7 +1,0 @@
-{
-  "todos": [
-    { "id": 3, "content": "Javascript으로 동적인 페이지 만들기", "done": true },
-    { "id": 2, "content": "CSS로 멋진 스타일링", "done": false },
-    { "id": 1, "content": "HTML의 중요성", "done": false }
-  ]
-}
