@@ -59,7 +59,7 @@ const nextId = () =>
 
 const getTodos = async () => {
   try {
-    const { data } = await axios.get("http://localhost:9000/todos");
+    const { data } = await axios.get("/todos");
     todos = data;
     console.log("[async-await, getTodos]", todos);
     render();
@@ -71,7 +71,7 @@ const getTodos = async () => {
 const addTodo = async (content) => {
   try {
     const { data } = await axios.post("http://localhost:9000/todos", {
-      id: generateid(),
+      id: nextId(),
       content,
       completed: false,
     });

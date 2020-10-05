@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+const proxy = require("http-proxy-middleware");
 
 const app = express();
 app.use(cors());
+app.use("/", proxy({ target: "http://localhost:9000", changeOrigin: true }));
 
 let todos = [
   { id: 3, content: "Javascript", completed: false },
