@@ -36,6 +36,27 @@
   width: calc(100% - 2.1rem);
 }
 
+.nav {
+  display: flex;
+  align-items: baseline;
+  padding: 1rem 1rem 0rem;
+}
+
+.nav > li {
+  margin-right: 1rem;
+  border-radius: 5px;
+  padding: 0.25rem 0.5rem;
+}
+
+.nav > li:hover {
+  cursor: pointer;
+}
+
+.active {
+  color: #ffffff;
+  background-color: #23dea7;
+}
+
 .section-feature {
   padding: 1rem 1rem 0.5rem;
   display: flex;

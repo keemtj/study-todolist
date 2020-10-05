@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TODOLIST 2.0</title>
+    <title>TODOLIST 3.0</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -11,12 +11,17 @@
     <div class="container">
       <header class="header">
         <h1>Todos</h1>
-        <div>v2.0</div>
+        <div>v3.0</div>
       </header>
       <main class="main">
         <section class="section-input">
           <input class="input-todo" type="text" placeholder="Enter Todo!" />
         </section>
+        <ul class="nav">
+          <li id="all" class="active">All</li>
+          <li id="active">Active</li>
+          <li id="done">Done</li>
+        </ul>
         <section class="section-feature">
           <div>
             <input class="check-all" id="check-all" type="checkbox" />
