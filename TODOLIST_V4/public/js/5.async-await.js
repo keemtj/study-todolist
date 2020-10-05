@@ -59,7 +59,7 @@ const nextId = () =>
 
 const getTodos = async () => {
   try {
-    const { data } = await axios.get("/todos");
+    const { data } = await axios.get("http://localhost:9000/todos");
     todos = data;
     console.log("[async-await, getTodos]", todos);
     render();
